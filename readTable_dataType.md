@@ -58,5 +58,5 @@ If we want to slice the dataset, the following codes are all work. But one retur
 df[['您家中养殖过什么？']] #dataframe
 df['您家中养殖过什么？']  #series
 ```
-To better understand differences between `[]` and `[[]]`, there is also a (note)[https://stackoverflow.com/questions/64955439/difference-between-and-in-python]. \
+To better understand differences between `[]` and `[[]]`, there is also a [note](https://stackoverflow.com/questions/64955439/difference-between-and-in-python). \
 In short, `[]` returns **series**, `[[]]` returns **dataframe**. Analygous to **list** and **matrix** in R. 
