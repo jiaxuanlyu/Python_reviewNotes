@@ -87,6 +87,7 @@ pd.DataFrame(yangzhi['您家中养殖过什么？'].replace(to_replace='5', valu
 
 #if want to create a new df
 new_yangzhi = pd.DataFrame(yangzhi['您家中养殖过什么？'].replace(to_replace='5', value= '黄牛,牦牛,马,羊,猪'))
+pd.DataFrame(new_yangzhi['您家中养殖过什么？'].value_counts())
 ```
 |               | 	您家中养殖过什么？ |
 | ------------- | ------------- |
