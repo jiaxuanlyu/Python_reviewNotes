@@ -12,7 +12,7 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 ```ruby
 df = pd.read_csv("path", engine='python', encoding='utf-8-sig')
 ```
-**Note the part of encoding** to deal with Chinese characters.\
+**Note the part of encoding** to deal with Chinese characters. Also, the csv should be saved as **CSV UTF-8 encoding** in EXCEL.\
 The dataset is reading as a **DataFrame** now.
 ```ruby
 #have a quick view of the dataset
