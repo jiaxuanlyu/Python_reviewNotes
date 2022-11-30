@@ -41,8 +41,7 @@ As discussed earlier, the first row of dataset should be the column name. \
 ```ruby
 df.drop([0])
 ```
-drop is not working here, because the column names are not counting as parts of dataframe where have index. When dropping [0], the first row of data is dropped.
-The method is from reference. 
+drop is not working here, because the column names are not counting as parts of dataframe where have index. When dropping [0], the first row of data is dropped. 
 ```ruby
 df.columns = df.iloc[0]
 df = df.iloc[1:].reset_index(drop=True)
