@@ -98,4 +98,4 @@ pd.DataFrame(new_yangzhi['您家中养殖过什么？'].value_counts())
 
 `.nunique()` could also be used here to check whether data is replaced or not. 
 
-Alternatively, if there are some rows which fill with NaN, `.drop()` could be used to drop rows and columns. [Documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html).
+Alternatively, if there are some rows which fill with NaN, `.drop()` could be used to drop rows and columns. [Documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html). But when dropping rows/columns, the dataframe needs to be **defined** again.
