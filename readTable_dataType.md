@@ -25,7 +25,13 @@ df.columns.values.tolist()
 df.iloc[[0]].values.tolist()
 ```
 For this dataset, the column names are all question numbers, which should be dropped later. \
-What should be keeped as column names is the first row of data. Some interesting discussions related to data type are also summarized here. \
+What should be keeped as column names is the first row of data. Some interesting discussions related to data type are also summarized here. 
+<br></br>
+Meanwhile, hoping to get a quick view of the dataset, such as # rows and # columns:
+```python
+df.shape[0]  # Gives number of rows
+df.shape[1]  # Gives number of columns
+```
 <br></br>
 
 #### Changing column names
