@@ -110,3 +110,78 @@ Parameter, `axis`, needs to be **noticed carefully**.
 <br></br>
 
 ### Summarizing splitted data
+
+The goal is to summarize how many same answers happened among five columns. \
+Another dataframe, test, is selected from the original dataframe to test methods. The first applied method is:
+```python
+test = yangzhi_s.loc[[0, 1, 2, 3, 4, 5, 6]]
+test
+```
+||Response ID|	0	|1|	2|	3|	4|
+|-----|-----|------|---|-----|-----|---|
+|0	|R_2PnYZAYRYr|	黄牛|	马	|羊|	猪	|None|
+|1	|R_24GIq3nLL4	|黄牛	|马	|羊	|猪|	None|
+|2	|R_6J5UV9vdJA|	马	|羊	|猪|	None|	None|
+|3	|R_2fiRwwxfs7|	黄牛|羊|	猪|	None|	None|
+|4	|R_3LhiqCpFNw|	黄牛|马|	羊	|猪|	None|
+|5	|R_tSLLOuGCSR|	黄牛|马	|羊	|猪	|None|
+|6	|R_aaHMHC0KpH|	黄牛|	羊	|猪	|None|	None|
+```python
+test.where(test == "马")
+```
+||Response ID|	0	|1|	2|	3|	4|
+|-----|-----|------|---|-----|-----|---|
+|0	|NaN|	NaN|	马	|NaN|	NaN	|NaN|
+|1	|NaN	|NaN	|马	|NaN	|NaN|	NaN|
+|2	|NaN|	马	|NaN	|NaN|	NaN|	NaN|
+|3	|NaN|	NaN|NaN|	NaN|	NaN|	NaN|
+|4	|NaN|	NaN|马|	NaN	|NaN|	NaN|
+|5	|NaN|	NaN|马	|NaN	|NaN	|NaN|
+|6	|NaN|	NaN|	NaN	|NaN|NaN|	NaN|
+```python
+len(test.where(test == "马"))
+
+7
+```
+Based on `.where()`, there are 5 anwers of '马'. However, just using `len()` is not correct. `len()` is counting the length of the dataframe, the number of rows. Therefore, another method, writing conditions is used here. \
+The logic of writing if and else is similar with `ifelse()` in R. There is a [note](https://datatofish.com/if-condition-in-pandas-dataframe/) about applying if condition based on `pandas` in python. \
+In order to select the columns easier, the columns are renamed.
+```python
+test.columns = ['ResponseID', 'type1', 'type2', 'type3', 'type4', 'type5']
+```
+A function inside loop is written:
+```python
+def change_val(var, dframe):
+    dframe.loc[(dframe.type1 == var) | 
+         (dframe.type2 == var) | 
+         (dframe.type3 == var) | 
+         (dframe.type4 == var) | 
+         (dframe.type5 == var), var] = 1
+    return dframe
+
+types = ['黄牛', '牦牛', '马', '羊', '猪']
+for t in types:
+    d_frame = test #define global variable
+    change_val(t, d_frame)
+    num = d_frame[[t]].count().to_list()
+    print("finish {}, the number is {}".format(t, num))
+```
+```
+finish 黄牛, the number is [6]
+finish 牦牛, the number is [0]
+finish 马, the number is [5]
+finish 羊, the number is [7]
+finish 猪, the number is [7]
+```
+And the results based on test are consistent with what is included in table. The test table now looks like:
+||Response ID|	type1	|type2|type3|type4|type5|黄牛|牦牛|马|	羊|猪|
+|-----|-----|------|---|-----|-----|---|---|---|---|---|---|
+|0	|R_2PnYZAYRYr|	黄牛|	马	|羊|	猪	|None|1.0|NaN|1.0|1.0|	1.0|
+|1	|R_24GIq3nLL4	|黄牛	|马	|羊	|猪|	None|1.0|NaN|1.0|1.0|	1.0|
+|2	|R_6J5UV9vdJA|	马	|羊	|猪|	None|	None|NaN|NaN|1.0|1.0|	1.0|
+|3	|R_2fiRwwxfs7|	黄牛|羊|	猪|	None|	None|1.0|NaN|NaN|1.0|	1.0|
+|4	|R_3LhiqCpFNw|	黄牛|马|	羊	|猪|	None|1.0|NaN|1.0|1.0|1.0|
+|5	|R_tSLLOuGCSR|	黄牛|马	|羊	|猪	|None|1.0|NaN|1.0|1.0|1.0|
+|6	|R_aaHMHC0KpH|	黄牛|	羊	|猪	|None|	None|1.0|NaN|NaN|	1.0|	1.0|
+
+Later, the loop could be applied to the overall dataset. **Note**: the global variable need to be modified inside loop.
