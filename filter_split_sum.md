@@ -130,8 +130,12 @@ pol1[["补贴/亩","时间","亩(总)","补贴(一年总)"]] = pol1['退耕还�
 #method 2
 pol1 = pd.concat([pol1['ResponseID'], pol1['退耕还林（生态补偿）'].str.split(",", n=3, expand=True)], axis=1)
 pol1.rename(columns={0: "补贴/亩", 1: "时间", 2:"亩(总)", 3: "补贴(一年总)"}, inplace=True)
+
+#if want to keep more columns when using .concat()
+pd.concat([pol1[['ResponseID','退耕还林']], pol1['退耕还林（生态补偿）'].str.split(",", n=3, expand=True)], axis=1)
 ```
-Both of these methods work. The first method changes the dataframe directly, so the original column is kept. Then the original column could be dropped by using `.drop()`. Alternatively`.concat()` could be used outside `str.split()` and then change column names.
+Both of these methods work. The first method changes the dataframe directly, so the original column is kept. Then the original column could be dropped by using `.drop()`. Alternatively`.concat()` could be used outside `str.split()` and then change column names. \
+Also, if want to keep more columns, notice the use of `[[]]` when using `.concat()`.
 
 <br></br>
 
