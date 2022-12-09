@@ -105,7 +105,21 @@ yangzhi_s.head()
 |1|R_24GIBSuzJq3nLL4|	黄牛|	马|	羊	|猪	|None|
 |2|R_6J5UVsXzk9vdJAt|	马|	羊|	猪|	None|	None|
 
-Parameter, `axis`, needs to be **noticed carefully**.
+Parameter, `axis`, needs to be **noticed carefully**. \
+When the column inclues ${\color{red}NaN}$ **(mix NaN with strings)**, there is a **trick** about dealing with NaN. A strightforward way of solving it is referenced [from](https://stackoverflow.com/questions/69354795/how-to-skip-nan-values-when-splitting-up-a-column).
+
+|ResponseID|退耕还林（生态补偿）|
+|---|---|
+|R_3oNPXl67Z|260,NA,3,780|
+|R_3HIC0zrA6|	NaN|
+
+<sub>An example about how the dataframe will look like. [Reference](https://stackoverflow.com/questions/11509830/how-to-add-color-to-githubs-readme-md-file)
+about adding texts with color, based on GitHub supporting LaTeX/Mathematics.</sub>
+```python
+pol1['退耕还林（生态补偿）'].str.split(",", n=4, expand=True)
+```
+The part,`n=number`need to be specified. Based on [document](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html), `n`
+infers to **Limit number of splits in output**. In this case, one column should be splitted into four columns, so n=4. 
 
 <br></br>
 
