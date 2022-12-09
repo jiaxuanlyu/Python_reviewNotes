@@ -106,7 +106,7 @@ yangzhi_s.head()
 |2|R_6J5UVsXzk9vdJAt|	马|	羊|	猪|	None|	None|
 
 Parameter, `axis`, needs to be **noticed carefully**. \
-When the column inclues ${\color{red}NaN}$ **(mix NaN with strings)**, there is a **trick** about dealing with NaN. A strightforward way of solving it is referenced [from](https://stackoverflow.com/questions/69354795/how-to-skip-nan-values-when-splitting-up-a-column).
+When the column inclues ${\color{red}NaN}$ **(mix NaN with strings)**, there is a **trick** about dealing with NaN. A strightforward way of solving it is referenced from [here](https://stackoverflow.com/questions/69354795/how-to-skip-nan-values-when-splitting-up-a-column).
 
 |ResponseID|退耕还林（生态补偿）|
 |---|---|
@@ -116,10 +116,22 @@ When the column inclues ${\color{red}NaN}$ **(mix NaN with strings)**, there is 
 <sub>An example about how the dataframe will look like. [Reference](https://stackoverflow.com/questions/11509830/how-to-add-color-to-githubs-readme-md-file)
 about adding texts with color, based on GitHub supporting LaTeX/Mathematics.</sub>
 ```python
-pol1['退耕还林（生态补偿）'].str.split(",", n=4, expand=True)
+pol1['退耕还林（生态补偿）'].str.split(",", n=3, expand=True)
 ```
 The part,`n=number`need to be specified. Based on [document](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.split.html), `n`
-infers to **Limit number of splits in output**. In this case, one column should be splitted into four columns, so n=4. 
+infers to **Limit number of splits in output**. In this case, one column should be splitted into four columns, so n=3 (Notice the index of python starts from 0, 0, 1, 2, and 3). 
+```python
+#spliy by comma
+#【格式】：一亩补贴价格，时间，总共几亩，一年总共多少补贴
+
+#method1
+pol1[["补贴/亩","时间","亩(总)","补贴(一年总)"]] = pol1['退耕还林（生态补偿）'].str.split(",", n=3, expand=True)
+
+#method 2
+pol1 = pd.concat([pol1['ResponseID'], pol1['退耕还林（生态补偿）'].str.split(",", n=3, expand=True)], axis=1)
+pol1.rename(columns={0: "补贴/亩", 1: "时间", 2:"亩(总)", 3: "补贴(一年总)"}, inplace=True)
+```
+Both of these methods work. The first method changes the dataframe directly, so the original column is kept. Then the original column could be dropped by using `.drop()`. Alternatively`.concat()` could be used outside `str.split()` and then change column names.
 
 <br></br>
 
