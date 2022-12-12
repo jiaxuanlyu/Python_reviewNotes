@@ -1,6 +1,9 @@
 ### Filter Dataset
 
-In this part, I would like to filter the dataset with condition. Analygous to `filter()` inside `dplyr` in R. \
+In this part, I would like to filter the dataset with condition. Analygous to `filter()` inside `dplyr` in R.
+
+- filter out null values
+
 When filtering out NaN, two methods could be used. One is `.isnull()`, based on `pandas`, and the [Documentation](https://pandas.pydata.org/docs/reference/api/pandas.isnull.html).
 ```python
 pd.DataFrame(yangzhi['您家中养殖过什么？'].isnull()) 
@@ -26,6 +29,18 @@ And the result will be like using `filter` inside `dplyr`:
 |85 |NaN|
 |132|NaN|
 |204|NaN|
+
+- filter out not null data
+
+```python
+pol3[pol3["低保数额(共)"].notnull()]
+```
+The use of `[]` needs to be noticed. More [dicussions](https://stackoverflow.com/questions/60869243/how-can-i-filter-dataframe-based-on-null-not-null-using-a-column-name-as-a-varia) about filtering out not null values could be found here. \
+Similarly, when filtering out specific values:
+```python
+pol3[pol3["低保人数"] == "NA"]
+#NA is from original data source, which is string here.
+```
 
 <br></br>
 
