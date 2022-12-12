@@ -96,6 +96,11 @@ pd.DataFrame(new_yangzhi['您家中养殖过什么？'].value_counts())
 |黄牛,牦牛,马,羊,猪 | 2|
 | 马 | 1 |
 
-`.nunique()` could also be used here to check whether data is replaced or not. 
+`.nunique()` could also be used here to check whether data is replaced or not. \
+When replacing string to NaN values, there is the [note](https://stackoverflow.com/questions/53668421/replace-a-string-value-with-nan-in-pandas-data-frame-python).
+```python
+#replace NA with NAN
+pol1 = pol1.replace("NA", np.NaN)
+```
 
 Alternatively, if there are some rows which fill with NaN, `.drop()` could be used to drop rows and columns. [Documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html). But when dropping rows/columns, the dataframe needs to be **defined** again.
