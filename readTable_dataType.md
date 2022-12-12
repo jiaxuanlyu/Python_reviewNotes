@@ -65,3 +65,11 @@ df['您家中养殖过什么？']  #series
 ```
 To better understand differences between `[]` and `[[]]`, there is also a [note](https://stackoverflow.com/questions/64955439/difference-between-and-in-python). \
 In short, `[]` returns **series**, `[[]]` returns **dataframe**. Analygous to **list** and **matrix** in R. 
+
+
+### Exporting Data
+
+Normally, `df.to_csv` could be used. However, when the table contains Chinese, here are some [notes](https://stackoverflow.com/questions/43321243/save-pandas-dataframe-containing-chinese-character-to-file).
+```python
+pol3.to_csv("C:/Users/pc/Downloads/pol3_test.csv", index=False, encoding='utf_8_sig')
+```
